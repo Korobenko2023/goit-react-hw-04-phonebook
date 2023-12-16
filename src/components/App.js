@@ -17,16 +17,19 @@ export const App = () => {
 
   useEffect(() => {window.localStorage.setItem('list-contacts', JSON.stringify(contacts))
   }, [contacts]);
-  
-  const addContact = newContact => {
-    const { name, number } = newContact;
 
-    if (contacts.some(contact => contact.name.toLowerCase() === name.toLowerCase())) {
-      alert(`${name} is already in contacts.`);
+  const addContact = newContact => {
+    const contact = {
+      ...newContact,
+      id: nanoid(),      
+    };
+    
+      if (contacts.some(contact => contact.name.toLowerCase() === newContact.name.toLowerCase())) {
+      alert(`${newContact.name} is already in contacts.`);
       return;
     }
 
-     setContacts(prevContacts => [...prevContacts, { id: nanoid(), name, number }],
+     setContacts(prevContacts => [...prevContacts, contact],
     )};
 
   const deleteContact = contactId => {
@@ -57,8 +60,7 @@ export const App = () => {
             
         <GlobalStyle />
       </AppContainer>
-    );
-  
+    );  
 };
   
  
